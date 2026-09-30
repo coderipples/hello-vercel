@@ -8,8 +8,13 @@
   --color-cyan: #22d3ee;
   --gradient-accent: linear-gradient(135deg, var(--color-purple), var(--color-cyan));
   --color-on-accent: #07102a;
-  --glow-card: 0 0 2.5rem rgb(168 85 247 / 0.22), 0 0 5rem rgb(168 85 247 / 0.1);
-  --glow-card-hover: 0 0 3rem rgb(168 85 247 / 0.4), 0 0 7rem rgb(168 85 247 / 0.2);
+  --glow-card:
+    0 0 2.5rem color-mix(in srgb, var(--color-purple) 22%, transparent),
+    0 0 5rem color-mix(in srgb, var(--color-purple) 10%, transparent);
+  --glow-card-hover:
+    0 0 3rem color-mix(in srgb, var(--color-purple) 40%, transparent),
+    0 0 7rem color-mix(in srgb, var(--color-purple) 20%, transparent);
+  --glow-button-hover: 0 0 1.5rem color-mix(in srgb, var(--color-cyan) 45%, transparent);
 
   /* Spacing */
   --space-1: 0.5rem;
@@ -72,7 +77,7 @@ main {
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(calc(var(--space-1) / -2));
   box-shadow: var(--glow-card-hover);
 }
 
@@ -116,7 +121,7 @@ button {
 }
 
 button:hover {
-  box-shadow: 0 0 1.5rem rgb(34 211 238 / 0.45);
+  box-shadow: var(--glow-button-hover);
 }
 
 button:active {
@@ -125,7 +130,7 @@ button:active {
 
 button:focus-visible {
   outline: 3px solid var(--color-text);
-  outline-offset: 4px;
+  outline-offset: calc(var(--space-1) / 2);
 }
 
 .swap {
@@ -135,7 +140,7 @@ button:focus-visible {
 @keyframes swap {
   from {
     opacity: 0;
-    transform: translateY(0.5rem);
+    transform: translateY(var(--space-1));
   }
   to {
     opacity: 1;

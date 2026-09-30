@@ -24,6 +24,36 @@ const greetings = [
   { text: "Xin chào", language: "Vietnamese", lang: "vi" },
 ];
 
+const themes = ["neon", "ios", "claude", "spy", "kids"];
+const root = document.documentElement;
+const themeButtons = document.querySelectorAll("[data-theme-choice]");
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+function applyTheme(name) {
+  if (!themes.includes(name)) name = themes[0];
+  root.dataset.theme = name;
+  for (const btn of themeButtons) {
+    btn.setAttribute("aria-pressed", String(btn.dataset.themeChoice === name));
+  }
+  // Tint Safari's toolbar to match the page
+  themeColorMeta.content = getComputedStyle(root).getPropertyValue("--color-bg").trim();
+}
+
+for (const btn of themeButtons) {
+  btn.addEventListener("click", () => {
+    applyTheme(btn.dataset.themeChoice);
+    try {
+      localStorage.setItem("theme", btn.dataset.themeChoice);
+    } catch {}
+  });
+}
+
+try {
+  applyTheme(localStorage.getItem("theme"));
+} catch {
+  applyTheme(themes[0]);
+}
+
 const greetingEl = document.getElementById("greeting");
 const languageEl = document.getElementById("language");
 const button = document.getElementById("cycle");
